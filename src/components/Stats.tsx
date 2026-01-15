@@ -16,7 +16,7 @@ const stats = [
   },
   {
     icon: Shield,
-    value: "15+",
+    value: "11+",
     label: "Sessions",
     description: "Talks, workshops & panels",
   },
