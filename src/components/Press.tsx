@@ -27,6 +27,11 @@ const pressReleases = [
     title: "Sysco LABS supports Sri Lanka's inaugural BSides Cybersecurity Conference",
     url: "https://www.lankatalks.com/post/sysco-labs-supports-sri-lanka-s-inaugural-bsides-cybersecurity-conference",
   },
+  {
+    publication: "Biz English",
+    title: "BSides Sri Lanka 2025 celebrates a breakthrough cybersecurity gathering in Colombo",
+    url: "https://bizenglish.adaderana.lk/bsides-sri-lanka-2025-celebrates-a-breakthrough-cybersecurity-gathering-in-colombo/",
+  },
 ];
 
 const Press = () => {
