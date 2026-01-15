@@ -4,6 +4,7 @@ import Stats from "@/components/Stats";
 import About from "@/components/About";
 import Gallery from "@/components/Gallery";
 import Team from "@/components/Team";
+import Press from "@/components/Press";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
@@ -16,6 +17,7 @@ const Index = () => {
       <About />
       <Gallery />
       <Team />
+      <Press />
       <CTA />
       <Footer />
     </div>
