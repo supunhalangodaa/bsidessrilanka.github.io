@@ -1,94 +1,66 @@
-import { motion } from "framer-motion";
-import { Code, Lock, Network, Cpu } from "lucide-react";
+import SectionLabel, { sectionTitleClass } from "@/components/SectionLabel";
+import { WRAP } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 const features = [
   {
-    icon: Lock,
-    title: "Security Research",
-    description: "Deep dives into the latest vulnerabilities and defense strategies",
+    title: "Security research",
+    description: "Deep dives into the latest vulnerabilities and defense strategies.",
   },
   {
-    icon: Network,
     title: "Networking",
-    description: "Connect with security professionals from across the region",
+    description: "Connect with security professionals from across the region.",
   },
   {
-    icon: Code,
-    title: "Hands-on Workshops",
-    description: "Learn practical skills from industry practitioners",
+    title: "Hands-on workshops",
+    description: "Learn practical skills from industry practitioners.",
   },
   {
-    icon: Cpu,
-    title: "CTF Challenges",
-    description: "Test your skills in competitive hacking challenges",
+    title: "CTF challenges",
+    description: "Test your skills in competitive hacking challenges.",
   },
 ];
 
 const About = () => {
   return (
-    <section id="about" className="py-24 relative">
-      <div className="container px-4 md:px-6">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left content */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="text-primary font-mono text-sm uppercase tracking-wider">
-              // about_bsides
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-4 mb-6">
-              Security by the Community,
-              <br />
-              <span className="text-gradient">For the Community</span>
+    <section id="about" className="border-t border-white/[0.07]">
+      <div className={cn(WRAP, "flex flex-col gap-[clamp(40px,5vw,72px)] py-[clamp(72px,9vw,128px)]")}>
+        <div className="flex flex-wrap items-start gap-x-16 gap-y-7">
+          <div className="flex min-w-0 flex-[1.3_1_440px] flex-col gap-4">
+            <SectionLabel index="02">readme</SectionLabel>
+            <h2 className={sectionTitleClass}>
+              Security by the community,
+              <span className="block text-subtle">for the community.</span>
             </h2>
-            <div className="space-y-4 text-muted-foreground">
-              <p>
-                BSides Sri Lanka brings together security researchers, practitioners, 
-                and enthusiasts in a community-driven conference that emphasizes 
-                learning and sharing.
-              </p>
-              <p>
-                Unlike traditional conferences, BSides events are organized by 
-                volunteers and focus on creating an intimate environment for 
-                meaningful discussions and knowledge exchange.
-              </p>
-              <p className="font-mono text-sm border-l-2 border-primary pl-4 text-foreground">
-                "Every person with an idea, some skills, or just curiosity has 
-                something to contribute."
-              </p>
-            </div>
-          </motion.div>
+          </div>
+          <div className="flex min-w-0 flex-[1_1_380px] flex-col gap-4 pt-[clamp(0px,3vw,36px)]">
+            <p className="text-[17px] leading-[1.65] text-muted-foreground">
+              BSides Sri Lanka brings together security researchers, practitioners, and enthusiasts in a
+              community-driven conference that emphasizes learning and sharing.
+            </p>
+            <p className="text-[17px] leading-[1.65] text-muted-foreground">
+              Unlike traditional conferences, BSides events are organized by volunteers and focus on creating an
+              intimate environment for meaningful discussions and knowledge exchange.
+            </p>
+            <p className="mt-2 font-mono text-sm leading-[1.7] text-foreground">
+              <span aria-hidden className="text-primary">
+                #{" "}
+              </span>
+              “Every person with an idea, some skills, or just curiosity has something to contribute.”
+            </p>
+          </div>
+        </div>
 
-          {/* Right content - feature grid */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-          >
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                className="p-5 bg-card border border-border rounded-lg hover:border-primary/30 transition-all duration-300 group"
-              >
-                <feature.icon className="w-8 h-8 text-primary mb-3 group-hover:scale-110 transition-transform" />
-                <h3 className="font-semibold text-foreground mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(220px,100%),1fr))] gap-y-8">
+          {features.map((feature, index) => (
+            <div key={feature.title} className="flex flex-col gap-2.5 border-l border-white/[0.12] py-1 pl-5 pr-6">
+              <span className="font-mono text-[13px] text-primary">{String(index + 1).padStart(2, "0")}</span>
+              <h3 className="text-[19px] font-semibold leading-[1.3] tracking-[-0.02em] text-foreground">
+                {feature.title}
+              </h3>
+              <p className="text-[15px] leading-[1.55] text-muted-foreground">{feature.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

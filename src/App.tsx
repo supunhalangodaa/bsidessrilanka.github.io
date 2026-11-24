@@ -15,7 +15,9 @@ const App = () => (
       <Sonner />
       <HashRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          {/* Hash routing turns in-page links like "#about" into "/about": render the
+              landing page for those too, and let it scroll to the section. */}
+          <Route path="/:section?" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,92 +1,24 @@
-import { motion } from "framer-motion";
-import { Users, Presentation, Shield, Award } from "lucide-react";
-
 const stats = [
-  {
-    icon: Users,
-    value: "350+",
-    label: "Attendees",
-    description: "First ever BSides Sri Lanka",
-  },
-  {
-    icon: Presentation,
-    value: "10+",
-    label: "Speakers",
-    description: "Industry experts & researchers",
-  },
-  {
-    icon: Shield,
-    value: "11+",
-    label: "Sessions",
-    description: "Talks, workshops & panels",
-  },
-  {
-    icon: Award,
-    value: "1st",
-    label: "Edition",
-    description: "Making history in Sri Lanka",
-  },
+  { value: "350+", label: "Attendees", description: "First ever BSides Sri Lanka" },
+  { value: "10+", label: "Speakers", description: "Industry experts & researchers" },
+  { value: "11+", label: "Sessions", description: "Talks, workshops & panels" },
+  { value: "1st", label: "Edition", description: "Making history in Sri Lanka" },
 ];
 
+/** 2025 by the numbers. */
 const Stats = () => {
   return (
-    <section className="py-24 bg-card relative overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent rounded-full blur-3xl" />
-      </div>
-
-      <div className="container relative z-10 px-4 md:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-primary font-mono text-sm uppercase tracking-wider">
-            // 2025_event_highlights
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(min(150px,100%),1fr))] gap-y-8">
+      {stats.map((stat) => (
+        <div key={stat.label} className="flex flex-col gap-1.5 border-l border-white/[0.12] py-1 pl-5 pr-4">
+          <span className="text-[clamp(40px,5vw,68px)] font-semibold leading-none tracking-[-0.045em] text-foreground tabular-nums">
+            {stat.value}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold mt-4 mb-4">
-            By The Numbers
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A snapshot of what made BSides Sri Lanka an unforgettable experience
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative p-6 bg-secondary/50 border border-border rounded-lg hover:border-primary/50 transition-all duration-300"
-            >
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                  <stat.icon className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <div className="text-3xl font-bold font-mono text-gradient">
-                    {stat.value}
-                  </div>
-                  <div className="text-foreground font-medium mt-1">
-                    {stat.label}
-                  </div>
-                  <div className="text-sm text-muted-foreground mt-1">
-                    {stat.description}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+          <span className="mt-1.5 font-mono text-xs uppercase tracking-[0.06em] text-primary">{stat.label}</span>
+          <span className="text-sm leading-normal text-muted-foreground">{stat.description}</span>
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
   );
 };
 

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Camera, X } from "lucide-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { X } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { blockTitleClass } from "@/components/SectionLabel";
 
 import event1 from "@/assets/gallery/event-1.jpg";
 import event2 from "@/assets/gallery/event-2.jpg";
@@ -16,75 +17,95 @@ import event10 from "@/assets/gallery/event-10.jpg";
 import event11 from "@/assets/gallery/event-11.jpg";
 import event12 from "@/assets/gallery/event-12.jpg";
 
-const images = [
-  { src: event1, alt: "Speaker presenting at BSides Sri Lanka 2025" },
-  { src: event2, alt: "Penetration testing talk at BSides" },
-  { src: event3, alt: "Speaker on stage at BSides" },
-  { src: event4, alt: "Panel discussion at BSides Sri Lanka" },
-  { src: event5, alt: "Technical presentation at BSides" },
-  { src: event6, alt: "Sponsor booth at BSides event" },
-  { src: event7, alt: "Audience at BSides Sri Lanka 2025" },
-  { src: event8, alt: "Cybersecurity expert speaking at BSides" },
-  { src: event9, alt: "Ethical hacker presentation at BSides" },
-  { src: event10, alt: "Bug hunting workshop at BSides" },
-  { src: event11, alt: "Hacking Village at BSides Sri Lanka" },
-  { src: event12, alt: "Networking at BSides Sri Lanka 2025" },
+interface Shot {
+  src: string;
+  alt: string;
+  portrait?: boolean;
+}
+
+const shots: Record<string, Shot> = {
+  podium: { src: event1, alt: "Speaker presenting at BSides Sri Lanka 2025", portrait: true },
+  pentest: { src: event2, alt: "Penetration testing talk at BSides", portrait: true },
+  stage: { src: event3, alt: "Speaker on stage at BSides", portrait: true },
+  panel: { src: event4, alt: "Panel discussion at BSides Sri Lanka", portrait: true },
+  technical: { src: event5, alt: "Technical presentation at BSides" },
+  booth: { src: event6, alt: "Sponsor booth at BSides event" },
+  audience: { src: event7, alt: "Audience at BSides Sri Lanka 2025" },
+  expert: { src: event8, alt: "Cybersecurity expert speaking at BSides" },
+  hacker: { src: event9, alt: "Ethical hacker presentation at BSides" },
+  workshop: { src: event10, alt: "Bug hunting workshop at BSides" },
+  village: { src: event11, alt: "Hacking Village at BSides Sri Lanka" },
+  networking: { src: event12, alt: "Networking at BSides Sri Lanka 2025" },
+};
+
+/**
+ * Justified rows: every photo keeps its own aspect ratio and each row fills the width.
+ * Each row is two pairs, so on phones a row splits into two shorter rows.
+ */
+const rows: [Shot, Shot][][] = [
+  [
+    [shots.audience, shots.hacker],
+    [shots.podium, shots.stage],
+  ],
+  [
+    [shots.workshop, shots.village],
+    [shots.booth, shots.pentest],
+  ],
+  [
+    [shots.technical, shots.networking],
+    [shots.expert, shots.panel],
+  ],
 ];
 
 const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+  const [selectedImage, setSelectedImage] = useState<Shot | null>(null);
 
   return (
-    <section id="gallery" className="py-20 bg-background relative overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Camera className="h-8 w-8 text-primary" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Snaps from 2025
-            </h2>
-          </div>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Relive the moments from BSides Sri Lanka 2025 — where the cybersecurity community came together.
-          </p>
-        </motion.div>
-
-        {/* Masonry-style grid with natural image sizes */}
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4">
-          {images.map((image, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.02 }}
-              onClick={() => setSelectedImage(image)}
-              className="break-inside-avoid overflow-hidden rounded-xl border border-border bg-card shadow-lg cursor-pointer group"
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-            </motion.div>
-          ))}
-        </div>
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5">
+        <h3 className={blockTitleClass}>Snaps from 2025</h3>
+        <span className="font-mono text-[13px] text-muted-foreground">ls ./snaps</span>
       </div>
 
-      {/* Lightbox Dialog */}
+      <div className="flex flex-col gap-2.5">
+        {rows.map((row, rowIndex) => (
+          <div key={rowIndex} className="flex flex-col gap-2.5 min-[761px]:flex-row min-[761px]:items-start">
+            {row.map((pair, pairIndex) => (
+              <div key={pairIndex} className="flex items-start gap-2.5 min-[761px]:contents">
+                {pair.map((shot) => (
+                  <button
+                    key={shot.src}
+                    type="button"
+                    onClick={() => setSelectedImage(shot)}
+                    aria-label={`View photo: ${shot.alt}`}
+                    className="group min-w-0 cursor-zoom-in overflow-hidden rounded-[10px] bg-secondary"
+                    style={{
+                      flex: `${shot.portrait ? 0.6667 : 1.5} 1 0px`,
+                      aspectRatio: shot.portrait ? "2 / 3" : "3 / 2",
+                    }}
+                  >
+                    <img
+                      src={shot.src}
+                      alt={shot.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="block h-full w-full object-cover transition-transform [transition-duration:400ms] group-hover:scale-[1.03]"
+                    />
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      {/* Lightbox */}
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-        <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 border-none bg-transparent shadow-none">
+        <DialogContent
+          aria-describedby={undefined}
+          className="max-h-[95vh] max-w-[95vw] border-none bg-transparent p-0 shadow-none [&>button]:hidden"
+        >
+          <DialogTitle className="sr-only">{selectedImage?.alt ?? "Photo"}</DialogTitle>
           <AnimatePresence>
             {selectedImage && (
               <motion.div
@@ -95,22 +116,24 @@ const Gallery = () => {
                 className="relative"
               >
                 <button
+                  type="button"
+                  aria-label="Close photo"
                   onClick={() => setSelectedImage(null)}
-                  className="absolute -top-12 right-0 p-2 rounded-full bg-background/80 text-foreground hover:bg-background transition-colors z-10"
+                  className="absolute -top-12 right-0 z-10 rounded-full bg-background/80 p-2 text-foreground transition-colors hover:bg-background"
                 >
-                  <X className="h-6 w-6" />
+                  <X aria-hidden className="h-6 w-6" />
                 </button>
                 <img
                   src={selectedImage.src}
                   alt={selectedImage.alt}
-                  className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-lg mx-auto"
+                  className="mx-auto h-auto max-h-[90vh] w-auto max-w-full rounded-lg object-contain"
                 />
               </motion.div>
             )}
           </AnimatePresence>
         </DialogContent>
       </Dialog>
-    </section>
+    </div>
   );
 };
 

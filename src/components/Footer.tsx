@@ -1,39 +1,56 @@
 import { Linkedin } from "lucide-react";
-import bsidesLogo from "@/assets/bsides-logo.png";
-const socialLinks = [{
-  icon: Linkedin,
-  href: "https://www.linkedin.com/company/bsidessrilanka",
-  label: "LinkedIn"
-}];
+import bsidesLogo from "@/assets/bsides-sri-lanka-logo.png";
+import { LINKEDIN_URL, WRAP } from "@/lib/site";
+import { cn } from "@/lib/utils";
+
+const footerLinks = [
+  { label: "Call for Papers", href: "#cfp" },
+  { label: "Call for Volunteers", href: "#volunteers" },
+  { label: "Sponsors", href: "#sponsors" },
+  { label: "About", href: "#about" },
+  { label: "2025", href: "#archive" },
+];
+
 const Footer = () => {
-  return <footer className="py-12 border-t border-border bg-card">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Logo */}
-          <div className="flex items-center gap-4">
-            <img src={bsidesLogo} alt="BSides Sri Lanka" className="w-24 h-auto" />
-          </div>
-
-          {/* Social links */}
-          <div className="flex items-center gap-4">
-            {socialLinks.map(social => <a key={social.label} href={social.href} className="p-2 bg-secondary rounded-lg hover:bg-primary/20 hover:text-primary transition-all duration-300" aria-label={social.label}>
-                <social.icon className="w-5 h-5" />
-              </a>)}
-          </div>
-
-          {/* Copyright */}
-          <div className="text-sm text-muted-foreground font-mono">
-            <span className="text-accent">&gt;</span> © 2026 BSides Sri Lanka
-          </div>
+  return (
+    <footer className="border-t border-white/[0.07] bg-black">
+      <div className={cn(WRAP, "flex flex-col gap-7 pb-9 pt-10")}>
+        <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-5">
+          <img src={bsidesLogo} alt="BSides Sri Lanka" className="block h-[60px] w-auto" />
+          <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-6">
+            {footerLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="inline-flex min-h-11 items-center text-sm font-medium text-muted-foreground transition-colors hover:text-white"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-white"
+            >
+              <Linkedin aria-hidden className="h-4 w-4" strokeWidth={1.5} />
+              <span>LinkedIn</span>
+            </a>
+          </nav>
         </div>
 
-        {/* Bottom note */}
-        <div className="mt-8 pt-8 border-t border-border text-center">
-          <p className="text-xs text-muted-foreground font-mono">
-            <span className="text-primary">#</span> Made with ❤️ by the Sri Lankan security community
-          </p>
+        <div className="flex flex-wrap justify-between gap-x-6 gap-y-1.5 border-t border-white/[0.07] pt-5 font-mono text-xs text-muted-foreground">
+          <span>© 2026 BSides Sri Lanka</span>
+          <span>
+            <span aria-hidden className="text-primary">
+              {"// "}
+            </span>
+            built by the Sri Lankan security community
+          </span>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;

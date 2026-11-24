@@ -1,66 +1,25 @@
-import { motion } from "framer-motion";
+import { blockTitleClass } from "@/components/SectionLabel";
 import sponsorsImage from "@/assets/sponsors-2025.jpg";
+
+/** The 2025 sponsors. The strip keeps its original white background so the logos stay true. */
 const Sponsors = () => {
-  return <section id="sponsors" className="py-20 md:py-32 relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 cyber-grid opacity-30" />
-      
-      <div className="container px-4 md:px-6 relative z-10">
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} whileInView={{
-        opacity: 1,
-        y: 0
-      }} viewport={{
-        once: true
-      }} transition={{
-        duration: 0.6
-      }} className="text-center mb-12">
-          <span className="inline-block px-4 py-1.5 mb-4 text-xs font-mono uppercase tracking-wider text-primary border border-primary/30 rounded-full">
-            Our Partners
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            2025 <span className="text-primary">Sponsors</span>
-          </h2>
-        </motion.div>
-
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} whileInView={{
-        opacity: 1,
-        y: 0
-      }} viewport={{
-        once: true
-      }} transition={{
-        duration: 0.6,
-        delay: 0.2
-      }} className="flex justify-center">
-          <img src={sponsorsImage} alt="BSides Sri Lanka 2025 Sponsors" className="max-w-full h-auto" />
-        </motion.div>
-
-        {/* CTA for sponsors */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} whileInView={{
-        opacity: 1,
-        y: 0
-      }} viewport={{
-        once: true
-      }} transition={{
-        duration: 0.6,
-        delay: 0.4
-      }} className="text-center mt-12">
-          <p className="text-muted-foreground font-mono text-sm mb-4">
-            Interested in sponsoring BSides Sri Lanka 2027?
-          </p>
-          <a href="https://form.jotform.com/260142521593047" target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 text-sm font-mono uppercase tracking-wider text-primary border border-primary/50 rounded hover:bg-primary/10 transition-all duration-300">
-            Become a Sponsor →
-          </a>
-        </motion.div>
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5">
+        <h3 className={blockTitleClass}>2025 sponsors</h3>
+        <span className="font-mono text-[13px] text-muted-foreground">cat ./sponsors</span>
       </div>
-    </section>;
+      <div className="overflow-x-auto rounded-xl bg-white p-[clamp(14px,2.6vw,28px)]">
+        <img
+          src={sponsorsImage}
+          alt="BSides Sri Lanka 2025 sponsors. Platinum Sponsor: OREL IT. Gold Sponsors: Dialog Enterprise and TrustVault. Strategic Partner: Sysco LABS. Silver Sponsor: eSec Forte. Cyber Warriors: HackerOne, The SecOps Group, SquareX, The XSSRat and PentesterLab."
+          loading="lazy"
+          decoding="async"
+          className="mx-auto block aspect-[1080/178] h-auto w-full min-w-[640px] max-w-[1080px] object-cover object-bottom"
+        />
+      </div>
+    </div>
+  );
 };
+
 export default Sponsors;

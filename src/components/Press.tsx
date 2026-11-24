@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { Newspaper, ExternalLink } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { blockTitleClass } from "@/components/SectionLabel";
 
 const pressReleases = [
   {
@@ -34,59 +34,36 @@ const pressReleases = [
   },
 ];
 
+/** Media coverage of the 2025 edition. */
 const Press = () => {
   return (
-    <section id="press" className="py-20 bg-background relative overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Newspaper className="h-8 w-8 text-primary" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Press Releases
-            </h2>
-          </div>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Media coverage and news about BSides Sri Lanka 2025.
-          </p>
-        </motion.div>
-
-        <div className="max-w-4xl mx-auto space-y-4">
-          {pressReleases.map((item, index) => (
-            <motion.a
-              key={index}
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.02, x: 8 }}
-              className="flex items-center justify-between gap-4 p-5 rounded-xl border border-border bg-card/50 hover:bg-card hover:border-primary/50 transition-all duration-300 group"
-            >
-              <div className="flex-1 min-w-0">
-                <span className="text-xs font-semibold text-primary uppercase tracking-wider">
-                  {item.publication}
-                </span>
-                <h3 className="text-foreground font-medium mt-1 line-clamp-2 group-hover:text-primary transition-colors">
-                  {item.title}
-                </h3>
-              </div>
-              <ExternalLink className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
-            </motion.a>
-          ))}
-        </div>
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5 pb-3">
+        <h3 className={blockTitleClass}>Press</h3>
+        <span className="font-mono text-[13px] text-muted-foreground">grep -r "BSides Sri Lanka" ./press</span>
       </div>
-    </section>
+      <div className="flex flex-col border-b border-white/[0.08]">
+        {pressReleases.map((item) => (
+          <a
+            key={item.url}
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-4 border-t border-white/[0.08] px-3 py-[18px] text-foreground transition-colors hover:bg-white/[0.05]"
+          >
+            <span className="flex min-w-0 flex-auto flex-wrap items-baseline gap-x-6 gap-y-1">
+              <span className="flex-[0_0_150px] font-mono text-xs uppercase tracking-[0.06em] text-muted-foreground">
+                {item.publication}
+              </span>
+              <span className="min-w-0 flex-[1_1_300px] text-[17px] font-medium leading-[1.45] text-foreground">
+                {item.title}
+              </span>
+            </span>
+            <ArrowUpRight aria-hidden className="h-[18px] w-[18px] shrink-0 text-primary" strokeWidth={1.8} />
+          </a>
+        ))}
+      </div>
+    </div>
   );
 };
 
